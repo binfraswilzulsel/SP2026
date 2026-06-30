@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Progres Program Prioritas Triwulan II 2026</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); 
+            color: #1e293b; line-height: 1.5; padding-bottom: 0; font-size: 17.5px; 
+        }
+        .container {
+            width: 100%; max-width: 650px; margin: 0 auto;
+            background-color: #f8fafc; min-height: 100vh; box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            display: flex; flex-direction: column;
+        }
+        
+        header {
+            position: -webkit-sticky; 
+            position: sticky;
+            top: 0;
+            z-index: 1000; 
+            background: linear-gradient(135deg, #0740aa 0%, #1d4ed8 100%); 
+            color: #ffffff; 
+            padding: 12px 20px; 
+            border-bottom-left-radius: 24px; border-bottom-right-radius: 24px;
+            box-shadow: 0 10px 20px rgba(7, 64, 170, 0.2);
+        }
+        .header-wrap { display: table; width: 100%; }
+        .header-logo-cell { display: table-cell; vertical-align: middle; width: 55px; } 
+        .header-logo {
+            width: 85px; 
+            height: 85px; 
+            background: rgba(255, 255, 255, 0.15); 
+            border: 1.5px solid rgba(255, 255, 255, 0.3); 
+            border-radius: 20px;
+            display: block; 
+            object-fit: contain; 
+            padding: 4px; 
+            backdrop-filter: blur(5px);
+        }
+        .header-text-cell { display: table-cell; vertical-align: middle; padding-left: 12px; }
+        header h1 { font-size: 20px; font-weight: 800; margin-bottom: 2px; line-height: 1.2; letter-spacing: -0.3px; } 
+        header p { font-size: 11px; opacity: 0.9; font-weight: 400; }
+        
+        .search-container { padding: 24px 20px 12px 20px; }
+        .search-flex { display: flex; gap: 10px; align-items: center; }
+        
+        .btn-filter-toggle {
+            background-color: #ffffff; border: 2px solid #e2e8f0;
+            border-radius: 14px; height: 54px; width: 54px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            flex-shrink: 0;
+        }
+        .btn-filter-toggle:hover, .btn-filter-toggle.active { 
+            border-color: #0740aa; background-color: #eff6ff; 
+        }
+        
+        .search-input {
+            flex: 1; padding: 15px 20px; border: 2px solid #e2e8f0;
+            border-radius: 14px; font-size: 16px; font-family: inherit;
+            outline: none; transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02); height: 54px;
+        }
+        .search-input:focus { border-color: #0740aa; box-shadow: 0 0 0 4px rgba(7, 64, 170, 0.15); }
+
+        .filter-panel {
+            display: none; background-color: #ffffff; border: 1px solid #e2e8f0;
+            border-radius: 14px; padding: 16px; margin-top: 10px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+        .filter-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+        .filter-group { flex: 1; min-width: 140px; }
+        .filter-group label { display: block; font-size: 12px; font-weight: 700; color: #64748b; margin-bottom: 6px; text-transform: uppercase; }
+        .filter-select {
+            width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 8px;
+            font-size: 14px; font-family: inherit; outline: none; color: #1e293b; background-color: #f8fafc;
+        }
+        .filter-select:focus { border-color: #0740aa; }
+
+        main { padding: 10px 20px 20px 20px; flex: 1; }
+        .opd-card {
+            background-color: #ffffff; border-radius: 18px; padding: 10px;
+            margin-bottom: 20px; border: 1px solid #0740aa;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .opd-card:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .opd-main-info { display: table; width: 100%; }
+        .opd-logo-cell { display: table-cell; vertical-align: middle; width: 70px; }
+        .opd-logo {
+            width: 70px;  
+            height: 70px; 
+            border-radius: 16px; 
+            display: block; 
+            border: 1px solid #bfdbfe;
+            object-fit: contain; 
+            background-color: #ffffff; 
+        }
+        .opd-details-cell { display: table-cell; vertical-align: middle; padding-left: 7px; }
+        .opd-title { font-size: 17.5px; font-weight: 700; color: #0f172a; margin-bottom: 1px; line-height: 1; }
+        .opd-meta { font-size: 13.5px; color: #64748b; line-height: 1.6; }
+        .opd-meta span { font-weight: 600; color: #334155; }
+        .pagu-total { color: #0740aa !important; font-weight: 700 !important; font-size: 14.5px; }
+        
+        .opd-action-cell { display: table-cell; vertical-align: middle; text-align: right; width: 75px; }
+        
+        .btn {
+            font-family: inherit; font-size: 12px; font-weight: 600; padding: 8px 12px;
+            border: none; border-radius: 8px; cursor: pointer; display: inline-block;
+            transition: all 0.2s ease; line-height: 1.2;
+        }
+        .btn-primary { background-color: #0740aa; color: #ffffff; }
+        .btn-primary:hover { background-color: #1d4ed8; }
+        .btn-success { background-color: #10b981; color: #ffffff; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2); }
+        .btn-success:hover { background-color: #059669; }
+        .btn-orange { background-color: #f97316; color: #ffffff; }
+        .btn-orange:hover { background-color: #ea580c; }
+
+        .kegiatan-container { display: none; margin-top: 20px; padding-top: 20px; border-top: 2px dashed #e2e8f0; }
+        .kegiatan-card { 
+            background-color: #f8fafc; border: 1px solid #5d0ddd; 
+            border-radius: 14px; padding: 16px; margin-bottom: 12px;
+        }
+        .kegiatan-card:last-child { margin-bottom: 0; }
+        .kegiatan-main-info { display: table; width: 100%; }
+        .kegiatan-text-cell { display: table-cell; vertical-align: middle; }
+        .kegiatan-title { font-size: 15.5px; font-weight: 700; color: #1e293b; margin-bottom: 5px; line-height: 1.4; }
+        .kegiatan-pagu { font-size: 13.5px; color: #64748b; font-weight: 500; }
+        .kegiatan-action-cell { display: table-cell; vertical-align: middle; text-align: right; width: 70px; }
+        
+        .kegiatan-sub-detail { display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid #e2e8f0; font-size: 13.5px; }
+        .detail-row { display: table; width: 100%; margin-bottom: 8px; }
+        .detail-row:last-child { margin-bottom: 0; }
+        .detail-label { display: table-cell; width: 45%; color: #64748b; font-weight: 500; padding: 2px 0; }
+        .detail-value { display: table-cell; width: 55%; color: #0f172a; font-weight: 600; text-align: right; padding: 2px 0; }
+        .status-badge { background-color: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        
+        footer {
+            background: linear-gradient(135deg, #0740aa 0%, #1d4ed8 100%); 
+            color: rgba(255, 255, 255, 0.8); 
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+            padding: 15px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            line-height: 1.4;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="header-wrap">
+            <div class="header-logo-cell">
+                <img class="header-logo" src="logo.png" alt="Logo Utama">
+            </div>
+            <div class="header-text-cell">
+                <h1>Progres Strong Point<br> 
+                Mitra Bidang Infraswil  Triwulan II 2026</h1>
+                <p>Sistem Monitoring & Evaluasi Capaian Kinerja</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="search-container">
+        <div class="search-flex">
+            <button class="btn-filter-toggle" id="filterToggleBtn" onclick="toggleFilterPanel()" title="Saring Pilihan">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0740aa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+            </button>
+            <input type="text" id="searchInput" class="search-input" placeholder="Cari nama kegiatan..." onkeyup="jalankanMultiFilter()">
+        </div>
+        
+        <div class="filter-panel" id="filterPanel">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label>Metode Pengadaan</label>
+                    <select id="filterMetode" class="filter-select" onchange="jalankanMultiFilter()">
+                        <option value="">Semua Metode</option>
+                        <option value="Swakelola">Swakelola</option>
+                        <option value="Swakelola Type 2">Swakelola Tipe 2</option>
+                        <option value="E-Purchasing">E-Purchasing</option>
+                        <option value="Tender">Tender</option>
+                        <option value="Seleksi">Seleksi</option>
+                        <option value="RO">RO (Repeat Order)</option>
+                        <option value="Pengadaan Langsung">Pengadaan Langsung</option>
+                        <option value="Hibah">Hibah</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Jenis Kontrak</label>
+                    <!-- ======================================================= -->
+                    <!-- PERUBAHAN: OPSI JENIS KONTRAK DISET SESUAI DAFTAR BARU -->
+                    <!-- ======================================================= -->
+                    <select id="filterKontrak" class="filter-select" onchange="jalankanMultiFilter()">
+                        <option value="">Semua Kontrak</option>
+                        <option value="Lumpsum">Lumpsum</option>
+                        <option value="Harga Satuan">Harga Satuan</option>
+                        <option value="Waktu Penugasan">Waktu Penugasan</option>
+                        <option value="Gabungan Harga satuan & Lumpsump">Gabungan Harga Satuan & Lumpsum</option>
+                        <option value="termin & lumpsump">Termin & Lumpsum</option>
+                        <option value="Hibah">Hibah</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main id="mainContent">
+    </main>
+    
+    <footer>
+        Strong Point Progress by @binfraswil Copyright 2026
+    </footer>
+</div>
+
+<script>
+    const proyekData = [
+  {
+    "opd": "BAPPELITBANGDA",
+    "kegiatan": "Uji Coba dan Penerapan Inovasi",
+    "anggaran": "Rp 1.000.000.000",
+    "durasi": "-",
+    "metode": "Swakelola",
+    "kontrak": "-",
+    "tgl_kontrak": "-",
+    "status": "Proses Pergeseran Anggaran dan Permitaan Penambahan Anggaran Kas",
+    "fisik": "Sebelumnya terdiri dari beberapa rekening belanja diminta untuk dipaketkan karena akan di swakelolakan",
+    "keuangan": "Rp 0",
+    "keterangan": "-"
+  },
+  
+];
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const groupedData = {};
+        proyekData.forEach(item => {
+            const namaOPD = item.opd && item.opd.trim() !== "" ? item.opd.trim() : "LAINNYA";
+            if (!groupedData[namaOPD]) {
+                groupedData[namaOPD] = [];
+            }
+            groupedData[namaOPD].push(item);
+        });
+
+        renderData(groupedData);
+    });
+
+    function hitungTotalPagu(listKegiatan) {
+        let total = 0;
+        listKegiatan.forEach(keg => {
+            if (keg.anggaran) {
+                let angka = parseFloat(keg.anggaran.replace(/[^0-9]/g, ''));
+                if (!isNaN(angka)) {
+                    total += angka;
+                }
+            }
+        });
+        return "Rp " + total.toLocaleString('id-ID');
+    }
+
+    function renderData(groupedData) {
+        const mainContent = document.getElementById('mainContent');
+        mainContent.innerHTML = '';
+
+        Object.keys(groupedData).forEach((namaOPD, index) => {
+            const listKegiatan = groupedData[namaOPD];
+            const idOPD = 'opd-' + index;
+            const inisial = namaOPD.substring(0, 3).toUpperCase();
+            const totalPaguOPD = hitungTotalPagu(listKegiatan);
+            
+            let opdCard = document.createElement('div');
+            opdCard.className = 'opd-card';
+
+            let kegiatanHtml = '';
+            listKegiatan.forEach(keg => {
+                kegiatanHtml += `
+                    <div class="kegiatan-card" 
+                         data-nama="${keg.kegiatan.toLowerCase()}" 
+                         data-metode="${(keg.metode || '').toLowerCase()}" 
+                         data-kontrak="${(keg.kontrak || '').toLowerCase()}">
+                        <div class="kegiatan-main-info">
+                            <div class="kegiatan-text-cell">
+                                <div class="kegiatan-title">${keg.kegiatan}</div>
+                                <div class="kegiatan-pagu">Anggaran: ${keg.anggaran}</div>
+                            </div>
+                            <div class="kegiatan-action-cell">
+                                <button class="btn btn-orange" onclick="toggleSubDetail(this)">Detail</button>
+                            </div>
+                        </div>
+                        <div class="kegiatan-sub-detail">
+                            <div class="detail-row"><div class="detail-label">Durasi Kerja</div><div class="detail-value">${keg.durasi || '-'}</div></div>
+                            <div class="detail-row"><div class="detail-label">Metode Pengadaan</div><div class="detail-value">${keg.metode || '-'}</div></div>
+                            <div class="detail-row"><div class="detail-label">Jenis Kontrak</div><div class="detail-value">${keg.kontrak || '-'}</div></div>
+                            <div class="detail-row"><div class="detail-label">Tgl Berkontrak</div><div class="detail-value">${keg.tgl_kontrak || '-'}</div></div>
+                            <div class="detail-row"><div class="detail-label">Status</div><div class="detail-value"><span class="status-badge">${keg.status || '-'}</span></div></div>
+                            <div class="detail-row"><div class="detail-label">Fisik</div><div class="detail-value">${keg.fisik || '0%'}</div></div>
+                            <div class="detail-row"><div class="detail-label">Keuangan</div><div class="detail-value">${keg.keuangan || 'Rp 0'}</div></div>
+                            <div class="detail-row"><div class="detail-label">Keterangan</div><div class="detail-value">${keg.keterangan || '-'}</div></div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            opdCard.innerHTML = `
+                <div class="opd-main-info">
+                    <div class="opd-logo-cell">
+                        <img class="opd-logo" src="${namaOPD}.png" alt="Logo ${namaOPD}" onerror="this.onerror=null; this.src='https://placehold.co/70x70?text=${inisial}';">
+                    </div>
+                    <div class="opd-details-cell">
+                        <div class="opd-title">${namaOPD}</div>
+                        <div class="opd-meta">
+                            Pagu: <span class="pagu-total">${totalPaguOPD}</span><br>
+                            Jumlah: <span>${listKegiatan.length} Kegiatan</span>
+                        </div>
+                    </div>
+                    <div class="opd-action-cell">
+                        <button class="btn btn-primary" onclick="toggleOPD(this, 'list-${idOPD}')">Detail</button>
+                    </div>
+                </div>
+                <div id="list-${idOPD}" class="kegiatan-container">
+                    ${kegiatanHtml}
+                </div>
+            `;
+            mainContent.appendChild(opdCard);
+        });
+    }
+
+    function toggleOPD(button, containerId) {
+        var container = document.getElementById(containerId);
+        if (container.style.display === "block") {
+            container.style.display = "none";
+            button.textContent = "Detail";
+            button.className = "btn btn-primary";
+        } else {
+            container.style.display = "block";
+            button.textContent = "Tutup";
+            button.className = "btn btn-success";
+        }
+    }
+
+    function toggleSubDetail(button) {
+        var kegiatanCard = button.closest('.kegiatan-card');
+        var subDetail = kegiatanCard.querySelector('.kegiatan-sub-detail');
+        if (subDetail.style.display === "block") {
+            subDetail.style.display = "none";
+            button.textContent = "Detail";
+            button.className = "btn btn-orange";
+        } else {
+            subDetail.style.display = "block";
+            button.textContent = "Tutup";
+            button.className = "btn btn-success";
+        }
+    }
+
+    function toggleFilterPanel() {
+        var panel = document.getElementById('filterPanel');
+        var btn = document.getElementById('filterToggleBtn');
+        if (panel.style.display === "block") {
+            panel.style.display = "none";
+            btn.classList.remove('active');
+        } else {
+            panel.style.display = "block";
+            btn.classList.add('active');
+        }
+    }
+
+    function jalankanMultiFilter() {
+        let keyword = document.getElementById('searchInput').value.toLowerCase();
+        let fMetode = document.getElementById('filterMetode').value.toLowerCase();
+        let fKontrak = document.getElementById('filterKontrak').value.toLowerCase();
+        
+        let kartuOPD = document.querySelectorAll('.opd-card');
+
+        kartuOPD.forEach(opdCard => {
+            let containerKegiatan = opdCard.querySelector('.kegiatan-container');
+            let tombolOPD = opdCard.querySelector('.opd-action-cell button');
+            let daftarKegiatan = opdCard.querySelectorAll('.kegiatan-card');
+            let adaKegiatanCocok = false;
+
+            daftarKegiatan.forEach(card => {
+                let namaKegiatan = card.getAttribute('data-nama');
+                let metodeKegiatan = card.getAttribute('data-metode');
+                let kontrakKegiatan = card.getAttribute('data-kontrak');
+
+                let cocokKeyword = (keyword === "" || namaKegiatan.includes(keyword));
+                let cocokMetode = (fMetode === "" || metodeKegiatan.includes(fMetode));
+                let cocokKontrak = (fKontrak === "" || kontrakKegiatan.includes(fKontrak));
+
+                if (cocokKeyword && cocokMetode && cocokKontrak) {
+                    card.style.display = "block";
+                    adaKegiatanCocok = true;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            if (keyword === "" && fMetode === "" && fKontrak === "") {
+                opdCard.style.display = "block";
+                containerKegiatan.style.display = "none";
+                tombolOPD.textContent = "Detail";
+                tombolOPD.className = "btn btn-primary";
+            } else if (adaKegiatanCocok) {
+                opdCard.style.display = "block";
+                containerKegiatan.style.display = "block";
+                tombolOPD.textContent = "Tutup";
+                tombolOPD.className = "btn btn-success";
+            } else {
+                opdCard.style.display = "none";
+            }
+        });
+    }
+</script>
+</body>
+</html>

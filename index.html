@@ -194,9 +194,6 @@
                 </div>
                 <div class="filter-group">
                     <label>Jenis Kontrak</label>
-                    <!-- ======================================================= -->
-                    <!-- PERUBAHAN: OPSI JENIS KONTRAK DISET SESUAI DAFTAR BARU -->
-                    <!-- ======================================================= -->
                     <select id="filterKontrak" class="filter-select" onchange="jalankanMultiFilter()">
                         <option value="">Semua Kontrak</option>
                         <option value="Lumpsum">Lumpsum</option>
@@ -221,21 +218,20 @@
 
 <script>
     const proyekData = [
-  {
-    "opd": "BAPPELITBANGDA",
-    "kegiatan": "Uji Coba dan Penerapan Inovasi",
-    "anggaran": "Rp 1.000.000.000",
-    "durasi": "-",
-    "metode": "Swakelola",
-    "kontrak": "-",
-    "tgl_kontrak": "-",
-    "status": "Proses Pergeseran Anggaran dan Permitaan Penambahan Anggaran Kas",
-    "fisik": "Sebelumnya terdiri dari beberapa rekening belanja diminta untuk dipaketkan karena akan di swakelolakan",
-    "keuangan": "Rp 0",
-    "keterangan": "-"
-  },
-  
-];
+      {
+        "opd": "BAPPELITBANGDA",
+        "kegiatan": "Uji Coba dan Penerapan Inovasi",
+        "anggaran": "Rp 1.000.000.000",
+        "durasi": "-",
+        "metode": "Swakelola",
+        "kontrak": "-",
+        "tgl_kontrak": "-",
+        "status": "Proses Pergeseran Anggaran dan Permitaan Penambahan Anggaran Kas",
+        "fisik": "Sebelumnya terdiri dari beberapa rekening belanja diminta untuk dipaketkan karena akan di swakelolakan",
+        "keuangan": "Rp 0",
+        "keterangan": "-"
+      }
+    ];
 
     document.addEventListener("DOMContentLoaded", function() {
         const groupedData = {};
@@ -309,7 +305,9 @@
             opdCard.innerHTML = `
                 <div class="opd-main-info">
                     <div class="opd-logo-cell">
-<img class="opd-logo" src="${namaOPD.toLowerCase()}.png" alt="Logo ${namaOPD}" onerror="this.onerror=null; this.src='https://placehold.co/70x70?text=${inisial}';">                    <div class="opd-details-cell">
+                        <img class="opd-logo" src="${namaOPD.toLowerCase()}.png" alt="Logo ${namaOPD}" onerror="this.onerror=null; this.src='https://placehold.co/70x70?text=${inisial}';">
+                    </div>
+                    <div class="opd-details-cell">
                         <div class="opd-title">${namaOPD}</div>
                         <div class="opd-meta">
                             Pagu: <span class="pagu-total">${totalPaguOPD}</span><br>
